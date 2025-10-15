@@ -1,4 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+  // Bloco de código NOVO com a lógica de login automático
+
+    // LÓGICA DE LOGIN AUTOMÁTICO
+    const account = myMSALObj.getAccountByUsername(sessionStorage.getItem('msalAccount'));
+
+    if (!account) {
+        // Se não há conta na sessão, o usuário não está logado.
+        // Inicia o processo de login por redirecionamento.
+        signIn(); 
+    } else {
+        // Se já existe uma conta na sessão, o usuário já está logado.
+        // Apenas atualiza a interface para mostrar o nome, avatar, etc.
+        updateUI(account);
+    }
+
+    
     let allAgents = [];
     const catalogContainer = document.getElementById('agent-catalog');
     const searchInput = document.getElementById('search-input');
