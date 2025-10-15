@@ -1,3 +1,9 @@
 {
-    "liveServer.settings.port": 5502
+    "liveServer.settings.port": 5502,    
+    "liveServer.settings.https": {
+     "enable": true,
+     "cert": "C:\\Users\\33j8\\Downloads\\marketplace_git\\Marketplace\\localhost.pem",
+     "key": "C:\\Users\\33j8\\Downloads\\marketplace_git\\Marketplace\\localhost-key.pem",
+     } 
+ 
 }
