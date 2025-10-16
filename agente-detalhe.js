@@ -248,7 +248,10 @@ async function solicitarAcesso(urlid, agente) {
                 responsavel: agente.responsavel,
                 emailResponsavel: agente.responsavelEmail,
                 status: 'Pendente',
-                justificativa: ''
+                justificativa: '',
+                nomeAgente: agente.nome,
+                Plataforma: agente.tecnologia
+
             }
         };
 
