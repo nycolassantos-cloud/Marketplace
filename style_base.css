@@ -1,0 +1,435 @@
+    /* CSS Reset & Vari�veis */
+    :root {
+    --primary-bg-start: #003812;
+    --primary-bg-end: #004c1a;
+    --secondary-bg: #004415;
+    --card-bg: #ffffff;
+    --text-light: #f0f2f5;
+    --text-dark: #1a202c;
+    --text-secondary: #5a6474;
+    --accent-color: #00e64d;
+    --border-color: #027a2b;
+    --button-primary-bg: #0d6efd; /* Cor do bot�o alterada para azul */
+    --button-primary-hover-bg: #0b5ed7; /* Cor do bot�o alterada para azul mais escuro */
+    --tag-beta-bg: #e6f7ff;
+    --tag-beta-text: #096dd9;
+    --tag-prod-bg: #f6ffed;
+    --tag-prod-text: #389e0d;
+    --tag-tech-bg: #e6e8eb;
+    --tag-tech-text: #434d5b;
+    --tag-rating-bg: #fffbe6;
+    --tag-rating-text: #d48806;
+}
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        position: relative; /* Necess�rio para o pseudo-elemento */
+        font-family: 'Roboto', sans-serif;
+        color: var(--text-light);
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+        background-color: var(--primary-bg-start);
+    }
+
+    /* Pseudo-elemento para a imagem de fundo com opacidade */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('img/fundo_verde.png');
+        background-color: var(--primary-bg-start);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.3;
+        z-index: -1; /* Coloca a imagem atr�s de todo o conte�do */
+    }
+
+
+    /* Container Principal */
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    /* Cabe�alho */
+    .header {
+        padding: 1.5rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo {
+        background: url(img/logo.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 120px;
+        height: 40px;
+    }
+
+    .user-nav {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        cursor: pointer;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #fff;
+        background-size: cover;
+        border: 2px solid var(--accent-color);
+    }
+
+    .user-name {
+        font-weight: 500;
+    }
+
+    .actions-menu {
+        display: none;
+        position: absolute;
+        top: 120%;
+        right: 0;
+        background-color: #1a202c;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        z-index: 10;
+        width: 200px;
+        overflow: hidden;
+    }
+
+    .actions-menu.active {
+        display: block;
+    }
+
+    .actions-menu a {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: var(--text-light);
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+    }
+
+    .actions-menu a:hover {
+        background-color: #2d3748;
+    }
+
+    /* Se��o de Busca */
+    .search-hero-section {
+        text-align: center;
+        padding: 2.5rem 1rem;
+    }
+
+    .search-hero-section h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .search-hero-section p {
+        font-size: 1.25rem;
+        color: #f0f2f5;
+        margin-bottom: 2rem;
+    }
+    
+    .search-wrapper {
+        max-width: 700px;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    #search-input {
+        width: 100%;
+        height: 60px;
+        border-radius: 30px;
+        border: 2px solid var(--border-color);
+        background-color: rgba(0, 68, 21, 0.8);
+        color: var(--text-light);
+        font-size: 1.1rem;
+        padding: 0 2rem 0 3.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    #search-input::placeholder { color: #ccc; }
+    #search-input:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 15px rgba(0, 230, 77, 0.3);
+    }
+
+    .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 1.25rem;
+        transform: translateY(-50%);
+        color: #ccc;
+    }
+
+    /* Se��o de Filtros */
+    .filter-section {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin: -1rem 0 3rem;
+    }
+    
+    .select-wrapper {
+        position: relative;
+        min-width: 220px;
+    }
+
+    .select-filter {
+        width: 100%;
+        height: 45px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        background-color: rgba(0, 68, 21, 0.8);
+        color: var(--text-light);
+        font-size: 1rem;
+        padding: 0 1rem;
+        -webkit-appearance: none;
+        appearance: none;
+        cursor: pointer;
+    }
+    
+    .select-wrapper::after {
+        content: '▽';
+        font-size: 0.8rem;
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    /* Cat�logo de Agentes */
+    #agent-catalog {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.5rem;
+        padding-bottom: 12rem; /* Espa�o inferior aumentado para o chat */
+    }
+
+    .agent-card {
+        background-color: var(--card-bg);
+        color: var(--text-dark);
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 0.5s forwards;
+    }
+
+    .agent-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        background-color: #f0f2f5;
+        background-size: cover;
+        background-position: center;
+        flex-shrink: 0;
+    }
+
+    .card-title-group h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .card-title-group p {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin: 0.25rem 0 0;
+    }
+
+    .card-body {
+        padding: 0 1.5rem 1.5rem;
+        flex-grow: 1;
+    }
+
+    .card-description {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+
+    .card-responsible {
+        font-size: 0.9rem;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+    }
+
+    .card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .tag {
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+    }
+
+    .tag-status-produ��o { background-color: var(--tag-prod-bg); color: var(--tag-prod-text); }
+    .tag-status-beta { background-color: var(--tag-beta-bg); color: var(--tag-beta-text); }
+    .tag-tech { background-color: var(--tag-tech-bg); color: var(--tag-tech-text); }
+    .tag-rating { background-color: var(--tag-rating-bg); color: var(--tag-rating-text); }
+
+    .card-footer {
+        border-top: 1px solid #e8e8e8;
+        padding: 1rem 1.5rem;
+        background-color: #fafafa;
+    }
+
+    .details-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        text-decoration: none;
+        padding: 0.75rem;
+        border-radius: 8px;
+        color: #fff;
+        background-color: var(--tag-tech-text);
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+
+    .details-button:hover {
+        background-color: var(--button-primary-hover-bg);
+    }
+
+    /* Anima��es e Responsividade */
+    @keyframes fadeIn {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Chat Widget Placeholder */
+    #chat-widget-placeholder {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 60px;
+        height: 60px;
+        background-color: #0d6efd; 
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        cursor: pointer;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        z-index: 1000;
+    }
+
+    #chat-widget-placeholder:hover {
+        background-color: #0b5ed7;
+        transform: scale(1.1);
+    }
+    
+    @media (max-width: 768px) {
+        .container { padding: 0 1rem; }
+        .search-hero-section h1 { font-size: 2.25rem; }
+        .filter-section { flex-direction: column; }
+    }
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#responsible-modal .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+    color: #333;
+}
+.responsible-info p {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+.responsible-info h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
+#imageModal .modal-content {
+     max-width: 900px;
+     padding: 0;
+     background: transparent;
+     margin: 5% auto;
+}
+
+#responsible-modal .close-modal {
+    color: #333;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#imageModal .close-modal {
+    color: #fff;
+}
+  

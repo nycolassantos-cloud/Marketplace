@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS Graph - Perfil do Usuário</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: auto; }
+        #auth-container button { padding: 10px 15px; cursor: pointer; font-size: 1em; border-radius: 4px; border: 1px solid transparent; }
+        #loginButton { background-color: #0078d4; color: white; }
+        #logoutButton { background-color: #d83b01; color: white; }
+        .user-card { border: 1px solid #ccc; padding: 20px; margin-top: 20px; border-radius: 5px; display: flex; align-items: center; background-color: #f9f9f9; }
+        .user-card img { border-radius: 50%; width: 96px; height: 96px; margin-right: 20px; object-fit: cover; flex-shrink: 0; }
+        .user-card .info p { margin: 5px 0; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Informações do Usuário Logado</h1>
+        <p>Este site usa a permissão <strong>User.Read</strong> para buscar e exibir os dados do seu perfil do Microsoft 365.</p>
+
+        <div id="auth-container">
+            <button id="loginButton">Entrar com a Conta Microsoft</button>
+            <button id="logoutButton" class="hidden">Sair</button>
+        </div>
+
+        <div id="content" class="hidden">
+            <div id="currentUserCard" class="user-card">
+                <img id="currentUserPhoto" src="" alt="Foto do Usuário" />
+                <div id="currentUserInfo" class="info"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://alcdn.msauth.net/browser/2.14.2/js/msal-browser.min.js"></script>
+    <script src="msal-microsoft.js"></script>
+
+</body>
+</html>

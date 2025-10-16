@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Agente</title>
+    <style>
+        /* ==========================================================================
+           Estilos para a Página de Detalhes do Agente
+           ========================================================================== */
+        :root {
+            --accent-color: #007bff;
+            --primary-text: #fff;
+            --secondary-text: #ccc;
+            --bg-color: #004415;
+            --card-bg: #ffffff;
+            --border-color: #dddfe2;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: Helvetica, Arial, sans-serif;
+            margin: 0;
+            color: var(--primary-text);
+        }
+
+        .detail-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-text);
+            text-decoration: none;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+        .back-button:hover {
+            color: #aaa;
+        }
+
+        /* --- Cabeçalho da Página de Detalhes --- */
+        .detail-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .agent-icon { flex-shrink: 0; }
+
+        .icon-placeholder {
+            width: 120px;
+            height: 120px;
+            background-color: #f0f2f5;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            font-weight: bold;
+            color: #333;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+
+        .agent-info { flex-grow: 1; }
+
+        .agent-title {
+            font-size: 2.8em;
+            font-weight: 700;
+            margin: 0 0 5px 0;
+        }
+
+        .agent-developer, .agent-responsible {
+            font-size: 1.1em;
+            margin: 0 0 15px 0;
+            font-weight: 500;
+            color: var(--secondary-text);
+        }
+        
+        #responsible-name-link {
+            color: var(--accent-color);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .agent-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9em;
+            color: var(--secondary-text);
+            margin-bottom: 15px;
+        }
+
+        .agent-summary {
+            font-size: 1em;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        .agent-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+            width: 220px;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .btn-primary:hover { background-color: #0056b3; }
+        
+        /* --- Abas --- */
+        .tabs-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            color: #333;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+        
+        .tab-button {
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: #5a6474;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .tab-button.active { color: #1a202c; }
+        .tab-button.active::after { transform: scaleX(1); }
+        
+        .tab-content { display: none; animation: fadeIn 0.5s; }
+        .tab-content.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Capturas de Tela --- */
+         .detail-section {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            color: #333;
+        }
+        .screenshots-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding-bottom: 15px;
+        }
+
+        .screenshots-container img {
+            max-height: 250px;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        
+        /* Prompts e Feedbacks */
+        #prompts ul, .feedback-list { list-style: none; padding: 0; }
+        #prompts li, .feedback-item {
+            background-color: #f4f7fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+        }
+        .feedback-author { font-weight: 700; margin-bottom: 0.5rem; }
+
+        .feedback-form {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .feedback-form h3 { margin-bottom: 1rem; }
+        .feedback-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            min-height: 100px;
+            margin-bottom: 1rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 500px;
+            position: relative;
+            color: #333;
+        }
+        
+        #imageModal .modal-content {
+             max-width: 900px;
+             padding: 0;
+             background: transparent;
+             margin: 5% auto;
+        }
+
+        .close-modal {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #imageModal .close-modal {
+            color: #fff;
+        }
+        
+        #modalImage { width: 100%; border-radius: 8px; }
+
+        .responsible-info h2 { margin-bottom: 1.5rem; }
+        .responsible-info p { margin-bottom: 0.5rem; font-size: 1.1rem;}
+        
+        .responsible-details {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #resp-modal-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 3px solid var(--accent-color);
+        }
+    </style>
+    <script src="https://alcdn.msauth.net/browser/2.14.2/js/msal-browser.min.js"></script>
+    <script src="msal-microsoft.js"></script>
+</head>
+<body>
+    <div id="imageModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+    
+    <div id="responsible-modal" class="modal">
+        <div class="modal-content responsible-info">
+            <span class="close-modal">&times;</span>
+            <h2>Informações de Contato</h2>
+            <div class="responsible-details">
+                <img id="resp-modal-photo" src="" alt="Foto do Responsável">
+                <div class="responsible-text">
+                    <p><strong>Nome:</strong> <span id="resp-modal-name"></span></p>
+                    <p><strong>Área:</strong> <span id="resp-modal-area"></span></p>
+                    <p><strong>E-mail:</strong> <span id="resp-modal-email"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="detail-container">
+        <a href="index.html" class="back-button" aria-label="Voltar para a página inicial">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Voltar
+        </a>
+        <header class="detail-header">
+            <div class="agent-icon">
+                <div class="icon-placeholder"></div>
+            </div>
+            <div class="agent-info">
+                <h1 class="agent-title">Carregando...</h1>
+                <p class="agent-developer">Carregando...</p>
+                <p class="agent-responsible">Responsável: <span id="responsible-name-link">Carregando...</span></p>
+                <div class="agent-meta">
+                    <span class="sp1">0.0 ★</span>
+                    <span class="agent-category">Carregando...</span>
+                </div>
+                <p class="agent-summary">Carregando...</p>
+            </div>
+            <div class="agent-actions">
+            </div>
+        </header>
+
+        <section class="detail-section">
+            <h2 class="section-title">Capturas de tela</h2>
+            <div class="screenshots-container" id="screenshots-container">
+                <!-- Imagens preenchidas por JS -->
+            </div>
+        </section>
+
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="description">Descrição</button>
+                <button class="tab-button" data-tab="prompts">Prompts Sugeridos</button>
+                <button class="tab-button" data-tab="feedback">Feedbacks</button>
+            </div>
+
+            <div id="description" class="tab-content active">
+                <p>Carregando descrição...</p>
+            </div>
+
+            <div id="prompts" class="tab-content">
+                <ul>
+                    <li>"Qual o resumo das vendas do último trimestre?"</li>
+                    <li>"Crie um plano de marketing para o novo produto X."</li>
+                </ul>
+            </div>
+
+            <div id="feedback" class="tab-content">
+                <div class="feedback-list" id="feedback-list">
+                    <!-- Feedbacks preenchidos por JS -->
+                </div>
+                <form class="feedback-form" id="feedback-form">
+                    <h3>Deixe seu feedback:</h3>
+                    <textarea placeholder="Escreva seu comentário..." required></textarea>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script type="application/json" id="agent-data">
+[
+    { "id":1, "nome":"Agente de Análise Sobrestadia (Demurrage)", "funcionalidade":"Agente de Análise e  cálculos diversos envolvidos no processo de Sobrestadia (Demurrage)", "descricao":"Agente de Análise e  cálculos diversos envolvidos no processo de Sobrestadia (Demurrage)", "categoria":"Operações", "responsavel":"Giovanni Lopes Pereira", "tecnologia":"TBD", "status":"Beta", "avaliacao":"5.0", "icone":null, "alias":"Agente de Análise Sobrestadia", "capturas": [] },
+    { "id":2, "nome":"Agente de S&OP", "funcionalidade":"Agente de consulta aos dados de S&OP", "descricao":"Agente de IA dedicado à responder perguntas de negócio...", "categoria":"Operações", "responsavel":"Viviane Antonia Correa Thomé", "tecnologia":"Luria", "status":"Beta", "avaliacao":"5.0", "icone":null, "alias":"Agente de S&OP", "capturas": [] },
+    { "id":16, "nome":"Lu", "funcionalidade":"Informações internas de notícias, benefícios e sistemas", "descricao":"Alimentada por tecnologia avançada...", "categoria":"Toda a Vibra", "responsavel":"Daniel de Oliveira", "tecnologia":"GCP", "status":"Produção", "avaliacao":"4.9", "icone":"Lu.png", "alias":"Lu", "capturas": ["img_lu1.png", "img_lu2.png", "img_lu3.png", "img_lu4.png"] }
+]
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const agentId = parseInt(params.get("id"));
+
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const responsibleModal = document.getElementById('responsible-modal');
+
+    // Carregar dados e popular a página
+    try {
+        const dataElement = document.getElementById('agent-data');
+        const agents = JSON.parse(dataElement.textContent);
+        const agent = agents.find(a => a.id === agentId);
+
+        if (agent) {
+            populatePage(agent);
+            setupEventListeners(agent);
+        } else {
+            document.querySelector('.detail-container').innerHTML = '<h1>Agente não encontrado.</h1>';
+        }
+    } catch (e) {
+        console.error("Erro ao carregar dados dos agentes:", e);
+        document.querySelector('.detail-container').innerHTML = '<h1>Erro ao carregar dados.</h1>';
+    }
+
+    function populatePage(agent) {
+        document.title = `Detalhes - ${agent.nome}`;
+        
+        const iconUrl = agent.icone ? `img/${agent.alias}/${agent.icone}` : 'img/err.png';
+        document.querySelector('.icon-placeholder').style.background = `url('${iconUrl}')`;
+        
+        document.querySelector('.agent-title').innerHTML = agent.nome;
+        document.querySelector('.agent-developer').innerHTML = `Tecnologia: ${agent.tecnologia}`;
+        document.querySelector('#responsible-name-link').innerHTML = agent.responsavel;
+        document.querySelector('.agent-summary').innerHTML = agent.funcionalidade;
+        document.querySelector('.agent-category').innerHTML = agent.categoria;
+        document.querySelector('.sp1').innerHTML = `${agent.avaliacao} ★`;
+        document.querySelector('#description p').innerHTML = agent.descricao;
+
+        // Ações
+        const actionsContainer = document.querySelector('.agent-actions');
+        actionsContainer.innerHTML = ''; // Limpar antes de adicionar
+        if (agent.url_agente) {
+            const btnPrimary = document.createElement('button');
+            btnPrimary.className = 'btn-primary btn';
+            btnPrimary.textContent = "Ativar";
+            btnPrimary.onclick = () => window.open(agent.url_agente, '_blank');
+            actionsContainer.appendChild(btnPrimary);
+        }
+
+        // Screenshots
+        const screenshotsContainer = document.getElementById('screenshots-container');
+        screenshotsContainer.innerHTML = '';
+        if (agent.capturas && agent.capturas.length > 0) {
+            agent.capturas.forEach(src => {
+                if(src) {
+                    const img = document.createElement('img');
+                    img.className = 'screenshot-img';
+                    img.src = `img/${agent.alias}/${src}`;
+                    screenshotsContainer.appendChild(img);
+                }
+            });
+        } else {
+            screenshotsContainer.innerHTML = '<p>Nenhuma captura de tela disponível.</p>';
+        }
+    }
+
+    function setupEventListeners(agent) {
+        // Abas
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                button.classList.add('active');
+                document.getElementById(button.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Modal de Screenshot
+        document.getElementById('screenshots-container').addEventListener('click', (e) => {
+            if (e.target.classList.contains('screenshot-img')) {
+                modalImage.src = e.target.src;
+                imageModal.style.display = 'block';
+            }
+        });
+
+        // Modal do Responsável
+        document.getElementById('responsible-name-link').addEventListener('click', () => {
+             const responsibleName = agent.responsavel;
+             const initials = responsibleName.split(' ').map(n => n[0]).join('').substring(0, 2);
+             const photoUrl = `https://placehold.co/100x100/007bff/FFF?text=${initials}`;
+
+             document.getElementById('resp-modal-photo').src = photoUrl;
+             document.getElementById('resp-modal-name').textContent = responsibleName;
+             document.getElementById('resp-modal-area').textContent = agent.categoria;
+             document.getElementById('resp-modal-email').textContent = `${responsibleName.split(' ')[0].toLowerCase()}@empresa.com`;
+             responsibleModal.style.display = 'block';
+        });
+
+        // Formulário de Feedback
+        document.getElementById('feedback-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const textarea = e.target.querySelector('textarea');
+            const comment = textarea.value.trim();
+            if (comment) {
+                const feedbackList = document.getElementById('feedback-list');
+                const newItem = document.createElement('div');
+                newItem.className = 'feedback-item';
+                newItem.innerHTML = `<p class="feedback-author"><strong>Usuário</strong></p><p>${comment}</p>`;
+                feedbackList.appendChild(newItem);
+                textarea.value = '';
+            }
+        });
+        
+        // Fechar Modais
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.querySelector('.close-modal').addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        });
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>
+
