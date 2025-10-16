@@ -135,6 +135,19 @@
         </div>
 
     </div>
+<!-- Modal de Justificativa -->
+<div id="justificativa-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-modal" data-close="justificativa-modal">&times;</span>
+    <h2>Justificativa do Acesso</h2>
+    <p>Explique por que você precisa deste agente:</p>
+    <textarea id="justificativa-text" rows="6" placeholder="Digite sua justificativa..." style="width:100%;"></textarea>
+    <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end;">
+      <button id="justificativa-cancelar" class="btn btn-secondary">Cancelar</button>
+      <button id="justificativa-enviar" class="btn btn-primary">Enviar</button>
+    </div>
+  </div>
+</div>
 
 
 <script src="agente-detalhe.js"></script>
