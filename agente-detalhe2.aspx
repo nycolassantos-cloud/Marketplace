@@ -5,22 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Agente - IA Financeira</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="agente-detalhe.css">
-    <link rel="icon" href="https://www.vibraenergia.com.br/sites/default/files/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="agente-detalhe2.css">
+    
 </head>
 <script src="linkJSON.js"></script>
 <body>
-    <div id="responsible-modal" class="modal">
-        <div class="modal-content responsible-info">
-            <span class="close-modal">&times;</span>
-            <h2>Informações de Contato</h2>
-            <p><strong>Nome:</strong> <span id="resp-modal-name"></span></p>
-            <p><strong>Área:</strong> <span id="resp-modal-area"></span></p>
-            <p><strong>E-mail:</strong> <span id="resp-modal-email"></span></p>
 
-            <button type="button" id="enviarTeams" style="margin-top:20px;margin-left: 27%;width: 205px;background-color: #5b5fc7;" class="btn btn-primary" onclick="enviarTeams()">Falar no Teams</button>
-        </div>
-    </div>
     <div class="avaliacao"></div>
 
         <div id="imageModal" class="modal">
@@ -35,7 +25,7 @@
 
 
     <div class="detail-container">
-        <a href="index.html" class="back-button" aria-label="Voltar para a página inicial">
+        <a href="index.aspx" class="back-button" aria-label="Voltar para a p�gina inicial">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             Voltar
         </a>
@@ -48,44 +38,60 @@
                 <p class="agent-developer">Carregando...</p>
                 <div class="agent-meta">
                     <span class="sp1">0.0 ?</span>
-                    <span>•</span>
-                    <span class="agent-category">Carregando...</span>
-                    <span>•</span>
+                    <span>�</span>
                     <span class="sp2">90% assertividade</span>
+                    <span>�</span>
+                    <span class="agent-category">Carregando...</span>
                 </div>
                 <p class="agent-summary">Carregando...</p>
             </div>
             <div class="agent-actions">
+                <button class="btn btn-primary">Ativar</button>
+                <button class="btn btn-secondary">Visitar Site</button>
+                <div class="agent-price-info">
+                    <span class="price-tag">L</span>
+                    <div>
+                        <p>LIVRE</p>
+                        <p class="small-text">Recursos adicionais podem ser pagos</p>
+                    </div>
+                </div>
             </div>
         </header>
 
-        <section class="detail-section" id="captura-tela">
-            <h2 class="section-title">Capturas de tela</h2> 
+        <section class="detail-section">
+            <h2 class="section-title">Capturas de tela</h2>
             <div class="screenshots-container">
-                <img class="img1 screenshot-img" src="img/null.png" alt=""/>
-                <img class="img2 screenshot-img" src="img/null.png" alt=""/>
-                <img class="img3 screenshot-img" src="img/null.png" alt=""/>
-                <img class="img4 screenshot-img" src="img/null.png" alt=""/>
+                <img class="img1 screenshot-img" src="img/img_lu1.png" alt=""/>
+                <img class="img2 screenshot-img" src="img/img_lu2.png" alt=""/>
+                <img class="img3 screenshot-img" src="img/img_lu3.png" alt=""/>
+                <img class="img4 screenshot-img" src="img/img_lu4.png" alt=""/>
+
+               <!-- <img class="img1 screenshot-img" src="img/null.png" alt="">
+                <img class="img2 screenshot-img" src="img/null.png" alt="">
+                <img class="img3 screenshot-img" src="img/null.png" alt="">
+                <img class="img4 screenshot-img" src="img/null.png" alt="">-->
             </div>
         </section>
 
         <div class="tabs-container">
             <div class="tabs">
-                <button class="tab-button active" data-tab="description">Descrição</button>
+                <button class="tab-button active" data-tab="description">Descri��o</button>
                 <button class="tab-button" data-tab="prompts">Prompts Sugeridos</button>
                 <button class="tab-button" data-tab="feedback">Feedbacks</button>
             </div>
 
             <div id="description" class="tab-content active">
-                <div>Carregando descrição...
-                </div>
+                <p>Carregando descrição...</p>
             </div>
-
             <div id="prompts" class="tab-content">
                 <ul>
-                    <!-- Os <li> serão inseridos pelo JS -->
+                    <li>"Qual o resumo das vendas do último trimestre?"</li>
+                    <li>"Crie um plano de marketing para o novo produto X."</li>
+                    <li>"Compare a performance das campanhas A e B."</li>
+                    <li>"Gere um relatório de satisfação do cliente."</li>
                 </ul>
             </div>
+
             <div id="feedback" class="tab-content">
                 <div class="feedback-list">
                     <div class="feedback-item">
@@ -108,6 +114,6 @@
     </div>
 
 
-<script src="agente-detalhe.js"></script>
+<script src="agente-detalhe2.js"></script>
 </body>
 </html>

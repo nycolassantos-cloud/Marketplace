@@ -17,7 +17,7 @@
         "captura1": "img_lu1.png",
         "captura2": "img_lu2.png",
         "captura3": "img_lu3.png",
-        "captura4": "apresentacao_lu",
+        "captura4": "img_lu4.png",
         "url_agente": "https://teams.microsoft.com/l/app/a71e712b-2f0b-453c-9cb8-65a57db40df1?source=app-header-share-entrypoint",
         "icone": "Lu.png",
         "agente-de-instrucoes": "Não",
@@ -25,7 +25,11 @@
         "desenvolvido_por": "Vibra",
         "confidencialidade": "Público",
         "alias": "Lu",
-        "Prompt": null,
+        "Prompt": [
+                     "prompt 1 : Quais são as últimas notícias sobre a Vibra Energia?",
+                     "prompt 2 : Quais são os benefícios oferecidos pela Vibra Energia aos colaboradores?",
+                     "prompt 3 : Como posso solicitar o vale-transporte na Vibra Energia?"
+        ],
         "agente_de_plataforma": false
     },
     {
@@ -54,7 +58,11 @@
         "desenvolvido_por": "Vibra",
         "confidencialidade": "Restrito",
         "alias": "Lubito",
-        "Prompt": null,
+        "Prompt":  [
+                     "prompt 1 : Quais lubrificantes da nossa linha podem substituir o lubrificante x?",
+                     "prompt 2 : Quais são as características do lubrificante x",
+                     "prompt 3 : Como nosso lubrificante x se compara ao lubrificante y ?"
+        ],
         "agente_de_plataforma": false
     },
     {
@@ -83,7 +91,11 @@
         "desenvolvido_por": "Vibra",
         "confidencialidade": "Restrito",
         "alias": "Simplifica EV",
-        "Prompt": null,
+        "Prompt":  [
+                     "prompt 1 : Como faço para solicitar um reembolso de despesas de viagem corporativa?",
+                     "prompt 2 : Preciso saber o procedimento para abrir um novo protocolo comercial.",
+                     "prompt 3 : Tenho uma dúvida sobre as políticas da empresa, onde consigo essa informação?"
+        ],
         "agente_de_plataforma": false
     },
     {
@@ -112,7 +124,11 @@
         "desenvolvido_por": "Microsoft",
         "confidencialidade": "Público",
         "alias": "Search Microsoft",
-        "Prompt": null,
+        "Prompt": [
+                     "prompt 1 : Quais são as principais tendências em [tema] nos últimos 12 meses?",
+                     "prompt 2 : Resuma os principais insights sobre [tema] a partir dos documentos disponíveis.",
+                     "prompt 3 : Quais oportunidades de inovação foram identificadas nos últimos projetos?"
+        ],
         "agente_de_plataforma": true
     },
     {
@@ -141,7 +157,11 @@
         "desenvolvido_por": "Microsoft",
         "confidencialidade": "Público",
         "alias": "Analista Microsoft",
-        "Prompt": null,
+        "Prompt": [
+                     "prompt 1 : Quais entregas estão previstas para minha squad esta semana?",
+                     "prompt 2 : Liste os sistemas sob minha responsabilidade e seus status atuais.",
+                     "prompt 3 : Quais automações posso aplicar para reduzir tarefas repetitivas?"
+        ],
         "agente_de_plataforma": true
     },
     {
@@ -170,7 +190,11 @@
         "desenvolvido_por": "Microsoft",
         "confidencialidade": "Público",
         "alias": "Prompt Coach Microsoft",
-        "Prompt": null,
+        "Prompt": [
+                     "prompt 1 : Resuma este documento em tópicos principais e destaque os riscos.",
+                     "prompt 2 : Crie um e-mail profissional com base neste rascunho, mantendo tom formal e objetivo.",
+                     "prompt 3 : Sugira três ideias de campanha com base nos dados deste arquivo de feedback de clientes."
+        ],
         "agente_de_plataforma": true
     },
     {
@@ -199,7 +223,11 @@
         "desenvolvido_por": "Microsoft",
         "confidencialidade": "Público",
         "alias": "Writing Coach Microsoft",
-        "Prompt": null,
+        "Prompt": [
+                     "prompt 1 : Melhore a clareza e o tom deste e-mail para torná-lo mais profissional.",
+                     "prompt 2 : Reescreva este parágrafo com linguagem mais persuasiva e objetiva.",
+                     "prompt 3 : Sugira uma estrutura melhor para este relatório técnico."
+        ],
         "agente_de_plataforma": true
     },
     {
@@ -228,7 +256,11 @@
         "desenvolvido_por": "Microsoft",
         "confidencialidade": "Público",
         "alias": "Idea Coach Microsoft",
-        "Prompt": null,
+        "Prompt": [
+                     "prompt 1 : Me dê três ideias para melhorar o engajamento dos colaboradores usando IA.",
+                     "prompt 2 : Sugira nomes criativos para um programa de sustentabilidade voltado para clientes.",
+                     "prompt 3 : Quais soluções posso propor para reduzir retrabalho em processos internos?"
+        ],
         "agente_de_plataforma": true
     },
     {
@@ -257,7 +289,11 @@
         "desenvolvido_por": "Microsoft",
         "confidencialidade": "Público",
         "alias": "Career Coach Microsoft",
-        "Prompt": null,
+        "Prompt": [
+                     "prompt 1 : Quais habilidades devo desenvolver para crescer na minha área atual?",
+                     "prompt 2 : Me ajude a montar um plano de carreira para os próximos 2 anos.",
+                     "prompt 3 : Sugira formas de destacar meu trabalho em reuniões e apresentações."
+        ],
         "agente_de_plataforma": true
     },
     {
@@ -286,7 +322,11 @@
         "desenvolvido_por": "Microsoft",
         "confidencialidade": "Público",
         "alias": "Learning Coach Microsoft",
-        "Prompt": null,
+        "Prompt": [
+                     "prompt 1 : Monte um plano de estudo para aprender sobre segurança da informação em 30 dias.",
+                     "prompt 2 : Quais trilhas de aprendizado são recomendadas para quem quer trabalhar com IA?",
+                     "prompt 3 : Me ajude a revisar os conceitos básicos de computação em nuvem."
+        ],
         "agente_de_plataforma": true
     },
     {

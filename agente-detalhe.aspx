@@ -10,27 +10,12 @@
 </head>
 <script src="linkJSON.js"></script>
 <body>
-    <!-- Bloco user-nav agora visível por padrão -->
-    <header class="header" style="display: none;">
-        <nav class="user-nav">
-            <div class="user-profile" id="user-menu-toggle">
-                <span id="userName" class="user-name"></span>
-                <div id="userAvatar" class="user-avatar"></div>
-            </div>
-            <div class="actions-menu" id="actions-menu">
-                <a id="AcompanharSolicitacoes" href="#">Acompanhar Solicitações</a>
-                <a id="loginButton" href="#">Fazer Login</a>
-                <a id="logoutButton" href="#">Logout</a>
-            </div>
-        </nav>
-    </header>
- 
     <div id="responsible-modal" class="modal">
         <div class="modal-content responsible-info">
             <span class="close-modal">&times;</span>
-            <h2>Informações de Contato</h2>
+            <h2>Informaï¿½ï¿½es de Contato</h2>
             <p><strong>Nome:</strong> <span id="resp-modal-name"></span></p>
-            <p><strong>Área:</strong> <span id="resp-modal-area"></span></p>
+            <p><strong>ï¿½rea:</strong> <span id="resp-modal-area"></span></p>
             <p><strong>E-mail:</strong> <span id="resp-modal-email"></span></p>
 
             <button type="button" id="enviarTeams" style="margin-top:20px;margin-left: 27%;width: 205px;background-color: #5b5fc7;" class="btn btn-primary" onclick="enviarTeams()">Falar no Teams</button>
@@ -48,19 +33,9 @@
         <img class="modal-content" id="modalImage">
     </div>
 
-    <!-- NOVO: Modal para Acompanhar Solicitações -->
-    <div id="solicitacoes-modal" class="modal">
-        <div class="modal-content solicitacoes-info">
-            <span class="close-modal">&times;</span>
-            <h2>Minhas Solicitações de Acesso</h2>
-            <div id="solicitacoes-list">
-                <!-- As solicitações serão inseridas aqui -->
-            </div>
-        </div>
-    </div>
 
     <div class="detail-container">
-        <a href="index.html" class="back-button" aria-label="Voltar para a página inicial">
+        <a href="index.aspx" class="back-button" aria-label="Voltar para a pï¿½gina inicial">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             Voltar
         </a>
@@ -73,9 +48,9 @@
                 <p class="agent-developer">Carregando...</p>
                 <div class="agent-meta">
                     <span class="sp1">0.0 ?</span>
-                    <span>•</span>
+                    <span>ï¿½</span>
                     <span class="agent-category">Carregando...</span>
-                    <span>•</span>
+                    <span>ï¿½</span>
                     <span class="sp2">90% assertividade</span>
                 </div>
                 <p class="agent-summary">Carregando...</p>
@@ -85,7 +60,7 @@
         </header>
 
         <section class="detail-section" id="captura-tela">
-            <h2 class="section-title">Capturas de tela</h2> 
+            <h2 class="section-title">Capturas de tela</h2>
             <div class="screenshots-container">
                 <img class="img1 screenshot-img" src="img/null.png" alt=""/>
                 <img class="img2 screenshot-img" src="img/null.png" alt=""/>
@@ -96,22 +71,21 @@
 
         <div class="tabs-container">
             <div class="tabs">
-                <button class="tab-button active" data-tab="description">Descrição</button>
+                <button class="tab-button active" data-tab="description">Descriï¿½ï¿½o</button>
                 <button class="tab-button" data-tab="prompts">Prompts Sugeridos</button>
                 <button class="tab-button" data-tab="feedback">Feedbacks</button>
             </div>
 
             <div id="description" class="tab-content active">
-                <div>Carregando descrição...
-                </div>
+                <p>Carregando descriï¿½ï¿½o...</p>
             </div>
 
             <div id="prompts" class="tab-content">
                 <ul>
-                    <li>"Qual o resumo das vendas do último trimestre?"</li>
+                    <li>"Qual o resumo das vendas do ï¿½ltimo trimestre?"</li>
                     <li>"Crie um plano de marketing para o novo produto X."</li>
                     <li>"Compare a performance das campanhas A e B."</li>
-                    <li>"Gere um relatório de satisfação do cliente."</li>
+                    <li>"Gere um relatï¿½rio de satisfaï¿½ï¿½o do cliente."</li>
                 </ul>
             </div>
 
@@ -119,16 +93,16 @@
                 <div class="feedback-list">
                     <div class="feedback-item">
                         <p class="feedback-author"><strong>Carlos Silva</strong></p>
-                        <p>Muito útil! Me ajudou a otimizar meu tempo.</p>
+                        <p>Muito ï¿½til! Me ajudou a otimizar meu tempo.</p>
                     </div>
                     <div class="feedback-item">
                         <p class="feedback-author"><strong>Maria Oliveira</strong></p>
-                        <p>Ferramenta fantástica para análise de dados.</p>
+                        <p>Ferramenta fantï¿½stica para anï¿½lise de dados.</p>
                     </div>
                 </div>
                 <form class="feedback-form">
                     <h3>Deixe seu feedback:</h3>
-                    <textarea placeholder="Escreva seu comentário..." required></textarea>
+                    <textarea placeholder="Escreva seu comentï¿½rio..." required></textarea>
                     <button type="submit" class="btn btn-primary">Enviar</button>
                 </form>
             </div>
@@ -138,7 +112,5 @@
 
 
 <script src="agente-detalhe.js"></script>
-<script src="https://alcdn.msauth.net/browser/2.14.2/js/msal-browser.min.js"></script>
-<script src="msal-microsoft.js"></script>
 </body>
 </html>
