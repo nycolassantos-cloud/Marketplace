@@ -2,6 +2,8 @@
 var agente = null;
 const params = new URLSearchParams(window.location.search);
 const responsibleModal = document.getElementById('responsible-modal');
+// Lista Feedback (GUID fixo)
+const FEEDBACK_LIST_ID = '6657837b-a9d8-45c2-92c8-3154842ba4cc';
 
 // ====== NOVO: garante que exista um modal de justificativa no DOM ======
 function ensurejustificativaModalExists() {
@@ -371,3 +373,188 @@ async function solicitarAcesso(urlid, agente, justificativa = '') {
     throw error; // propaga para o caller reabilitar o botão
   }
 }
+
+
+
+
+
+/* ================================
+   FEEDBACK → SharePoint (Lista Feedback)
+   Cole este bloco no FINAL do agente-detalhe.js
+================================== */
+
+// GUID fixo da lista "Lista Feedback"
+
+
+// Cria o controle de 1–5 estrelas dentro do form (se ainda não existir)
+function ensureRatingStars(feedbackForm) {
+  if (!feedbackForm || feedbackForm.querySelector('.rating-stars')) return;
+
+  const starsWrap = document.createElement('div');
+  starsWrap.className = 'rating-stars';
+  starsWrap.style.display = 'flex';
+  starsWrap.style.gap = '6px';
+  starsWrap.style.alignItems = 'center';
+  starsWrap.style.margin = '6px 0 10px';
+
+  const label = document.createElement('span');
+  label.textContent = 'Sua avaliação:';
+  label.style.marginRight = '6px';
+  label.style.opacity = '0.9';
+
+  const hidden = document.createElement('input');
+  hidden.type = 'hidden';
+  hidden.name = 'estrelas';
+  hidden.value = '0';
+
+  const makeStar = (n) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'star-btn';
+    b.dataset.value = String(n);
+    b.textContent = '☆'; // vazio
+    b.style.fontSize = '22px';
+    b.style.lineHeight = '1';
+    b.style.border = 'none';
+    b.style.background = 'transparent';
+    b.style.cursor = 'pointer';
+    b.setAttribute('aria-label', `${n} estrela${n>1?'s':''}`);
+    b.addEventListener('mouseenter', () => paint(n));
+    b.addEventListener('focus', () => paint(n));
+    b.addEventListener('click', () => {
+      hidden.value = String(n);
+      paint(n);
+    });
+    return b;
+  };
+
+  const stars = Array.from({ length: 5 }, (_, i) => makeStar(i + 1));
+
+  const paint = (qtd) => {
+    stars.forEach((s, idx) => s.textContent = (idx < qtd ? '★' : '☆'));
+  };
+
+  starsWrap.appendChild(label);
+  stars.forEach(s => starsWrap.appendChild(s));
+  starsWrap.appendChild(hidden);
+
+  // insere antes do botão Enviar
+  const submitBtn = feedbackForm.querySelector('button[type="submit"]') || feedbackForm.lastElementChild;
+  feedbackForm.insertBefore(starsWrap, submitBtn);
+}
+
+// Envia o feedback para a lista SharePoint pelo Graph API
+async function enviarFeedbackSharePoint({ comentario, estrelas }) {
+  // Verifica login e agente
+  const account = myMSALObj.getAccountByUsername(sessionStorage.getItem('msalAccount'));
+  if (!account) { alert('Faça login para enviar feedback.'); throw new Error('Sem conta MSAL'); }
+  if (!agente)   { alert('Agente não carregado.');          throw new Error('Agente indefinido'); }
+
+  const token = await getToken();
+
+  // Endpoint com GUID fixo da lista
+  const endpoint = `https://graph.microsoft.com/v1.0/sites/vibraenergia.sharepoint.com:/sites/marketplace-agentes:/lists/${FEEDBACK_LIST_ID}/items`;
+
+  // Title ajuda se a coluna estiver obrigatória
+  const title = `${agente.nome || 'Agente'} • ${account.name || account.username} • ${new Date().toLocaleString()}`;
+
+  const body = {
+    fields: {
+      Title: title,
+      idAgente: String(agente.id),
+      nomeAgente: agente.nome || '',
+      emailSolicitante: account.username || '',
+      solicitante: account.name || '',
+      comentario: comentario || '',
+      estrelas: Number(estrelas) || 0
+    }
+  };
+
+  // Logs úteis
+  console.groupCollapsed('📝 Enviar Feedback → SharePoint');
+  console.log('Endpoint:', endpoint);
+  console.log('Payload:', body);
+  console.groupEnd();
+
+  const resp = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!resp.ok) {
+    const text = await resp.text().catch(() => '');
+    let apiMsg = text;
+    try { apiMsg = JSON.parse(text).error?.message || text; } catch {}
+    console.error('❌ Erro ao enviar feedback:', resp.status, resp.statusText, apiMsg);
+    throw new Error(`Não foi possível enviar seu feedback.\n${apiMsg}`);
+  }
+
+  const json = await resp.json().catch(() => ({}));
+  console.log('✅ Feedback criado:', json);
+  return json;
+}
+
+// Intercepta o submit do formulário de feedback (captura) e envia ao SharePoint
+(function wireFeedbackSubmission() {
+  const feedbackForm   = document.querySelector('.feedback-form');
+  const feedbackList   = document.querySelector('.feedback-list');
+  const feedbackTextarea = feedbackForm ? feedbackForm.querySelector('textarea') : null;
+  if (!feedbackForm || !feedbackTextarea) return;
+
+  // adiciona as estrelinhas se não existir
+  ensureRatingStars(feedbackForm);
+
+  // Handler em CAPTURA para “anular” o listener antigo e usar este
+  feedbackForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    event.stopImmediatePropagation(); // impede o handler antigo de rodar
+
+    const comentario = (feedbackTextarea.value || '').trim();
+    const estrelas   = Number(feedbackForm.querySelector('input[name="estrelas"]')?.value || 0);
+
+    if (!comentario) { alert('Escreva um comentário.'); return; }
+    if (estrelas < 1) { alert('Selecione uma nota (1 a 5 estrelas).'); return; }
+
+    const submitBtn = feedbackForm.querySelector('button[type="submit"]');
+    const oldText   = submitBtn ? submitBtn.textContent : '';
+
+    try {
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Enviando...'; }
+
+      await enviarFeedbackSharePoint({ comentario, estrelas });
+
+      // Atualiza UI local imediatamente
+      if (feedbackList) {
+        const newFeedback = document.createElement('div');
+        newFeedback.classList.add('feedback-item');
+        const starsText = '★'.repeat(estrelas) + '☆'.repeat(5 - estrelas);
+        // Nome do usuário logado (ou "Você")
+        const account = myMSALObj.getAccountByUsername(sessionStorage.getItem('msalAccount'));
+        const autor = account?.name || 'Você';
+
+        newFeedback.innerHTML = `
+          <p class="feedback-author"><strong>${autor}</strong> — <span>${starsText}</span></p>
+          <p>${comentario}</p>
+        `;
+        feedbackList.prepend(newFeedback);
+      }
+
+      // Reset do form
+      feedbackTextarea.value = '';
+      const hiddenStars = feedbackForm.querySelector('input[name="estrelas"]');
+      if (hiddenStars) hiddenStars.value = '0';
+      feedbackForm.querySelectorAll('.rating-stars .star-btn').forEach(btn => btn.textContent = '☆');
+
+      alert('Feedback enviado com sucesso!');
+    } catch (err) {
+      console.error(err);
+      alert(err?.message || 'Não foi possível enviar seu feedback.');
+    } finally {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = oldText || 'Enviar'; }
+    }
+  }, true); // ← captura = true (roda antes dos outros listeners)
+})();

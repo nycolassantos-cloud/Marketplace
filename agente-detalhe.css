@@ -627,6 +627,8 @@
     min-height: 120px;
   }
 }
+.rating-stars .star-btn { transition: transform .15s ease; }
+.rating-stars .star-btn:hover { transform: translateY(-1px) scale(1.06); }
 
 .status-pendente { background-color: #f0ad4e; }
 .status-aprovado { background-color: #5cb85c; }
